@@ -22,13 +22,16 @@ class PrintThread extends Thread {
 
     @Override
     public void run() {
-        for (; ; ) {
+        while (true) {
             try {
                 acquire.acquire();
-                log.info("{} → {}", getName(), text);
-            } catch (InterruptedException ignored) {
-                log.warn("{} interrupted", getName());
+            } catch (InterruptedException e) {
+                log.warn("[{}] interrupted while acquiring", getName());
+                Thread.currentThread().interrupt();
                 return;
+            }
+            try {
+                log.info("[{}] -> [{}]", getName(), text);
             } finally {
                 release.release();
             }

@@ -3,7 +3,7 @@ package ru.aston.alternatingthread;
 import java.util.concurrent.Semaphore;
 
 public class Alternating {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Semaphore s1 = new Semaphore(1);
         Semaphore s2 = new Semaphore(0);
 
@@ -12,5 +12,8 @@ public class Alternating {
 
         t1.start();
         t2.start();
+
+        t1.join();
+        t2.join();
     }
 }
