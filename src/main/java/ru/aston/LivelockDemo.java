@@ -35,7 +35,10 @@ public class LivelockDemo {
                 }
                 try {
                     Thread.sleep(10);
-                } catch (InterruptedException ignored) {
+                } catch (InterruptedException e) {
+                    log.warn("{}: interrupted", name);
+                    Thread.currentThread().interrupt(); // восстановление флага
+                    return;
                 }
             }
         };
